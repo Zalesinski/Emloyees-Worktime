@@ -10,7 +10,6 @@ let initialState = {
 const workLogReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_WORKING_LOG:
-            console.log('worklog loading');
             return {
                 ...state,
                 isLoaded: true,

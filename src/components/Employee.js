@@ -15,7 +15,7 @@ const Employee = ({id, fullName, bDay, selectEmployee, getEmployeesData, isLoade
     return (
         <TableRow>
             <TableCell>{id}</TableCell>
-            <TableCell> <Link onClick={() => onEmployeeSelected(id)} to="/worktime">{fullName}</Link> </TableCell>
+            <TableCell> <Link onClick={() => onEmployeeSelected(id)} to={`/worklog/${id}`}>{fullName}</Link> </TableCell>
             <TableCell>{formattedBirthDate}</TableCell>
         </TableRow>
     )

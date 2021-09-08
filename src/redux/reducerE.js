@@ -21,7 +21,7 @@ const employeesReducer = (state = initialState, action) => {
             case SELECT_EMPLOYEE:
             return {
                 ...state,
-                selectedEmployee: state.employees.filter(e => e.id == action.selectedEmployeeId)[0]
+                selectedEmployee: state.employees.find(e => e.id == action.selectedEmployeeId)
             }
             break;
         default:

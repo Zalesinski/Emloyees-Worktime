@@ -2,10 +2,11 @@ import React, {Component} from "react";
 // import {getEmployees, getWorklog} from "./api";
 import {connect, Provider} from "react-redux";
 import EmployeesList from "./components/EmployeesList";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Link, Route, Switch} from "react-router-dom";
 import EmployeeWorktime from "./components/EmployeeWorktime";
-import {getEmployees} from "./redux/reducerE";
+import {getEmployees, getEmployeesData} from "./redux/reducerE";
 import store from "./redux/store"
+import {getWorkingLogData} from "./redux/reducerW";
 
 class App extends Component {
     state = {
@@ -22,18 +23,12 @@ class App extends Component {
         }
 
         return (
-<Provider store={store}>
     <BrowserRouter>
         <Switch>
-            <Route exact path="/">
-                <EmployeesList/>
-            </Route>
-            <Route exact path="/worktime">
-                <EmployeeWorktime/>
-            </Route>
+            <Route exact path="/" component={EmployeesList}/>
+            <Route exact path="/worklog/:id" component={EmployeeWorktime}/>
         </Switch>
     </BrowserRouter>
-</Provider>
 
 
 
@@ -45,7 +40,6 @@ class App extends Component {
     }
 
     componentDidMount() {
-        // getData();
         this.setState({
             loading: false
         });

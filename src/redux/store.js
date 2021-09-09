@@ -1,7 +1,7 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunkMiddleware from "redux-thunk";
-import employeesReducer from "./reducerE";
-import workLogReducer from "./reducerW";
+import employeesReducer from "./employeesReducer";
+import workLogReducer from "./worklogReducer";
 
 let reducers = combineReducers({
   employees: employeesReducer,

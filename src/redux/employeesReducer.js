@@ -5,7 +5,7 @@ const SELECT_EMPLOYEE = "SELECT_EMPLOYEE"
 
 let initialState = {
     isLoaded: false,
-    employees: [],
+    employeesList: [],
     selectedEmployee: null
 }
 
@@ -15,26 +15,23 @@ const employeesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoaded: true,
-                employees: action.employees
+                employeesList: action.employeesList
             }
-            break;
-            case SELECT_EMPLOYEE:
+        case SELECT_EMPLOYEE:
             return {
                 ...state,
-                selectedEmployee: state.employees.find(e => e.id == action.selectedEmployeeId)
+                selectedEmployee: state.employeesList.find(e => e.id === action.selectedEmployeeId)
             }
-            break;
         default:
             return state;
     }
-    return state;
 }
 
 export default employeesReducer;
 
 export const selectEmployee = (selectedEmployeeId) => ({type: SELECT_EMPLOYEE, selectedEmployeeId});
 
-export const setEmployees = (employees) => ({type: SET_EMPLOYEES, employees});
+export const setEmployees = (employeesList) => ({type: SET_EMPLOYEES, employeesList});
 
 export const getEmployeesData = () => {
     return async dispatch => {

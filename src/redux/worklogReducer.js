@@ -15,11 +15,9 @@ const workLogReducer = (state = initialState, action) => {
                 isLoaded: true,
                 workingLog: action.workingLog
             }
-            break;
         default:
             return state;
     }
-    return state;
 }
 
 export default workLogReducer;

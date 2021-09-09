@@ -7,52 +7,44 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Employee from "./Employee";
-import {connect} from "react-redux";
-import {getEmployeesData, selectEmployee} from "../redux/reducerE";
-import {getWorkingLogData} from "../redux/reducerW";
+import {useDispatch, useSelector} from "react-redux";
+import {getEmployeesData} from "../redux/employeesReducer";
+import {getWorkingLogData} from "../redux/worklogReducer";
 
-class EmployeesList extends React.Component {
+function EmployeesList(props) {
 
-    componentDidMount() {
-       if (!this.props.employeesAreLoaded) this.props.getEmployeesData();
-       if (!this.props.worklogIsLoaded) this.props.getWorkingLogData();
-    }
+    const dispatch = useDispatch();
 
-    render() {
+    const employeesAreLoaded = useSelector(state => state.employees.isLoaded);
+    const employees = useSelector(state => state.employees.employeesList);
 
-        return (
-            <TableContainer>
-                <Table size="small" aria-label="a dense table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>ID</TableCell>
-                            <TableCell>ФИО</TableCell>
-                            <TableCell>Дата рождения</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.props.employees.map((e) => (
-                            <Employee key={e.id} id={e.id} fullName={`${e.lastName} ${e.firstName} ${e.middleName}`}
-                                      bDay={e.birthDate} selectEmployee={this.props.selectEmployee} getEmployeesData={this.props.getEmployeesData} isLoaded={this.props.employeesAreLoaded}/>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        );
-    }
+    useEffect(() => {
+        dispatch(getEmployeesData());
+        dispatch(getWorkingLogData());
+    }, [employeesAreLoaded]);
+
+    return (
+        <TableContainer>
+            <Table size="small" aria-label="a dense table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>ID</TableCell>
+                        <TableCell>ФИО</TableCell>
+                        <TableCell>Дата рождения</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {employees
+                        .sort((e1, e2) => e1.lastName > e2.lastName ? 1 : -1)
+                        .map((e) => (
+                        <Employee key={e.id} id={e.id} fullName={`${e.lastName} ${e.firstName} ${e.middleName}`}
+                                  bDay={e.birthDate}
+                        />
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    );
 }
 
-let mapStateToProps = state => {
-    return {
-        worklogIsLoaded: state.worklog.isLoaded,
-        employeesAreLoaded: state.employees.isLoaded,
-        employees: state.employees.employees,
-        selectedEmployee: state.employees.selectedEmployee
-    }
-}
-let mapDispatchToProps = {
-    getEmployeesData,
-    selectEmployee,
-    getWorkingLogData
-}
-export default connect(mapStateToProps, mapDispatchToProps)(EmployeesList);
+export default EmployeesList;

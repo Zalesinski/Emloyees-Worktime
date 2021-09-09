@@ -1,2 +1,3 @@
 # Emloyees-Worklog
-Created with CodeSandbox
+
+Правила внутреннего распорядка  можно поправлять. Смотрите комментарий в строке 18 файла /src/components/Worklog.js
